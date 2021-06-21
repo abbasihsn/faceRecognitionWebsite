@@ -5,7 +5,7 @@ import ImageLinkForm from './components/imageLinkForm/imageLinkForm';
 import Rank from './components/rank/rank'
 import 'tachyons';
 import Particles from 'react-particles-js'
-import { Component } from 'react';
+import React, { Component } from 'react';
 import Clarifai from 'clarifai'
 import FaceRecognitionResult from './components/faceRecognition/faceRecognition'
 import Login from './components/loginPage/login'
@@ -96,7 +96,7 @@ class App extends Component{
     }).then(res =>{
       this.displayBox(this.calculateFaceLocation(res))
       const requestOptions = {
-        method: 'POST',
+        method: 'put',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: this.state.userInfo.id})
     };
@@ -109,6 +109,12 @@ class App extends Component{
         });
     })
     .catch(err=>console.log(err))
+  }
+
+  onUserSignUp = (user)=>{
+    this.setState({userInfo:user});
+    this.onRouteChange('home');
+      console.log("yessss")
   }
 
   onRouteChange = (route, email)=>{
@@ -126,16 +132,13 @@ class App extends Component{
                       userInfo:res
                     });
             });
+    } else if(route==="signIn"){
+      this.setState({input:""})
     }
     this.setState({route:route}); 
     
   }
 
-  componentDidUpdate(){
-    if(this.state.route==="home"){
-      
-    }
-  }
 
   render(){
 
@@ -149,7 +152,7 @@ class App extends Component{
         />
         <Navigation onRouteChange={this.onRouteChange}  isSignedIn={route==='home'}/>
         {route==="signIn"?<Login onRouteChange = {this.onRouteChange}/>:
-          (route==='register'?<Register onRouteChange={this.onRouteChange}/>:
+          (route==='register'?<Register onRouteChange={this.onRouteChange} updateUser={this.onUserSignUp}/>:
           <div>
             <Logo />
             <Rank score={userInfo.score} name={userInfo.name}/>
