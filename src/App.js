@@ -58,7 +58,8 @@ class App extends Component{
     this.state = {
       input:"", 
       box:{},
-      route:'signIn'
+      route:'signIn',
+      userInfo:{}
     }
   }
 
@@ -92,17 +93,53 @@ class App extends Component{
     app.models.predict(
       Clarifai.FACE_DETECT_MODEL, {
       url: this.state.input
-    }).then(res =>this.displayBox(this.calculateFaceLocation(res)))
+    }).then(res =>{
+      this.displayBox(this.calculateFaceLocation(res))
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: this.state.userInfo.id})
+    };
+    fetch('http://localhost:3000/postImage', requestOptions)
+        .then(response => response.json())
+        .then(res=>{
+          this.setState({
+            userInfo:res
+          });
+        });
+    })
     .catch(err=>console.log(err))
   }
 
-  onRouteChange = (route)=>{
+  onRouteChange = (route, email)=>{
+    if(route==="home"){
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email})
+      };
+      console.log("user: ", JSON.stringify({ email: email}))
+      fetch('http://localhost:3000/user', requestOptions)
+            .then(response => response.json())
+            .then(res=>{
+                    this.setState({
+                      userInfo:res
+                    });
+            });
+    }
     this.setState({route:route}); 
+    
+  }
+
+  componentDidUpdate(){
+    if(this.state.route==="home"){
+      
+    }
   }
 
   render(){
 
-    const { input, route, box } = this.state;
+    const { input, route, box, userInfo} = this.state;
 
     
     return (
@@ -115,7 +152,7 @@ class App extends Component{
           (route==='register'?<Register onRouteChange={this.onRouteChange}/>:
           <div>
             <Logo />
-            <Rank />
+            <Rank score={userInfo.score} name={userInfo.name}/>
             <ImageLinkForm onInputChange = {this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
             <FaceRecognitionResult box={box} imageUrl={input}/>
           </div>
