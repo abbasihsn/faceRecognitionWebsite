@@ -94,6 +94,7 @@ class App extends Component{
       Clarifai.FACE_DETECT_MODEL, {
       url: this.state.input
     }).then(res =>{
+      console.log("id: ",this.state.userInfo.id)
       this.displayBox(this.calculateFaceLocation(res))
       const requestOptions = {
         method: 'put',
@@ -103,6 +104,7 @@ class App extends Component{
     fetch('http://localhost:3000/postImage', requestOptions)
         .then(response => response.json())
         .then(res=>{
+          console.log("here: ",res)
           this.setState({
             userInfo:res
           });
@@ -155,7 +157,7 @@ class App extends Component{
           (route==='register'?<Register onRouteChange={this.onRouteChange} updateUser={this.onUserSignUp}/>:
           <div>
             <Logo />
-            <Rank score={userInfo.score} name={userInfo.name}/>
+            <Rank score={userInfo.entries} name={userInfo.name}/>
             <ImageLinkForm onInputChange = {this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
             <FaceRecognitionResult box={box} imageUrl={input}/>
           </div>
