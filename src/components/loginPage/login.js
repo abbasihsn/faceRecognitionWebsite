@@ -27,7 +27,7 @@ class Login extends React.Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
     };
-    fetch("http://localhost:3000/signin", requestOptions).then((response) => {
+    fetch("https://abbasihsn-facedetection-api.herokuapp.com/signin", requestOptions).then((response) => {
       if (response.status === 200) {
         this.props.onRouteChange("home", loginEmail);
       } else {

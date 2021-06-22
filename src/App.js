@@ -103,7 +103,7 @@ class App extends Component{
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: this.state.userInfo.id})
     };
-    fetch('http://localhost:3000/postImage', requestOptions)
+    fetch('https://abbasihsn-facedetection-api.herokuapp.com/postImage', requestOptions)
         .then(response => response.json())
         .then(res=>{
           console.log("here: ",res)
@@ -129,7 +129,7 @@ class App extends Component{
           body: JSON.stringify({ email: email})
       };
       console.log("user: ", JSON.stringify({ email: email}))
-      fetch('http://localhost:3000/user', requestOptions)
+      fetch('https://abbasihsn-facedetection-api.herokuapp.com/user', requestOptions)
             .then(response => response.json())
             .then(res=>{
                     this.setState({

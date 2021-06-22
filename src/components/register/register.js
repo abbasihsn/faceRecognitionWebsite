@@ -35,7 +35,7 @@ class Register extends Component{
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: loginEmail, password:loginPassword, name:loginName})
         };
-        fetch('http://localhost:3000/signup', requestOptions)
+        fetch('https://abbasihsn-facedetection-api.herokuapp.com/signup', requestOptions)
             .then(response => response.json())
             .then(data=>{
                 if(data){
