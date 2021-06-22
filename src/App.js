@@ -51,16 +51,18 @@ const parameters = {
 }
 };
 
+const initialState = {
+  input:"", 
+  box:{},
+  route:'signIn',
+  userInfo:{}
+};
+
 class App extends Component{
 
   constructor(){
     super();
-    this.state = {
-      input:"", 
-      box:{},
-      route:'signIn',
-      userInfo:{}
-    }
+    this.state = initialState; 
   }
 
   onInputChange=(event)=>{
@@ -135,7 +137,7 @@ class App extends Component{
                     });
             });
     } else if(route==="signIn"){
-      this.setState({input:""})
+      this.setState(initialState)
     }
     this.setState({route:route}); 
     
