@@ -2,8 +2,8 @@
   "name": "facerecognitionapp",
   "version": "0.1.0",
   "engines": {
-    "node": "14.16.x",
-    "npm": "7.17.x"
+    "node": "14.16.0",
+    "npm": "7.17.0"
   },
   "private": true,
   "dependencies": {
