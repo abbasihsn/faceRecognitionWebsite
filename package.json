@@ -1,6 +1,10 @@
 {
   "name": "facerecognitionapp",
   "version": "0.1.0",
+  "engines": {
+    "node": "14.16.x",
+    "npm": "7.17.x"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.13.0",
